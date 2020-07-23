@@ -1,0 +1,26 @@
+{
+  "name": "generator-ts-app",
+  "version": "1.0.0",
+  "description": "Yeoman generator for ts project",
+  "main": "index.js",
+  "files": [
+    "generators"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "typescript",
+    "babel",
+    "webpack",
+    "eslint",
+    "prettier"
+  ],
+  "author": "badochov",
+  "license": "MIT",
+  "dependencies": {
+    "yeoman-generator": "^4.11.0"
+  },
+  "repository": "https://github.com/badochov/ts-app-generator"
+}
