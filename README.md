@@ -1,2 +1,3 @@
 # ts-app-generator
-Generator for TS app with webpack and babel using yeoman
+
+Generator for TS app using yeoman
