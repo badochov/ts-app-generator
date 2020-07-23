@@ -69,4 +69,11 @@ module.exports = class extends Generator {
     };
     this.fs.extendJSON(this.destinationPath("package.json"), scripts);
   }
+
+  createIndexFile() {
+    this.fs.copyTpl(
+      this.templatePath("src/index.ts"),
+      this.destinationPath("src/index.ts")
+    );
+  }
 };
