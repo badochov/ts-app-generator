@@ -1,45 +1,18 @@
 const Generator = require("yeoman-generator");
-
+// const nodeFs = require("fs");
 module.exports = class extends Generator {
-  installBabel() {
-    this.npmInstall(["@babel/core", "@babel/preset-typescript"], {
-      "save-dev": true,
-    });
-  }
-  installWebpack() {
-    this.npmInstall(
-      ["webpack", "webpack-cli", "babel-loader", "webpack-merge"],
-      {
-        "save-dev": true,
-      }
-    );
-  }
-  installTypescript() {
-    this.npmInstall(["typescript"], { "save-dev": true });
-  }
+  // prompting() {
+  //   this.spawnCommandSync("npm", ["init"]);
+  // }
 
-  installEslint() {
-    this.npmInstall(
-      [
-        "@typescript-eslint/eslint-plugin",
-        "@typescript-eslint/parser",
-        "eslint",
-        "eslint-config-prettier",
-        "eslint-plugin-prettier",
-        "prettier",
-      ],
-      { "save-dev": true }
-    );
-  }
-
-  addTsConfig() {
+  _addTsConfig() {
     this.fs.copyTpl(
       this.templatePath("tsconfig.json"),
       this.destinationPath("tsconfig.json")
     );
   }
 
-  addWebpackConfig() {
+  _addWebpackConfig() {
     const webpackFiles = [
       "webpack.common.js",
       "webpack.prod.js",
@@ -53,27 +26,68 @@ module.exports = class extends Generator {
     }
   }
 
-  addESLintConfig() {
+  _addESLintConfig() {
     this.fs.copyTpl(
       this.templatePath(".eslint.js"),
       this.destinationPath(".eslint.js")
     );
   }
 
-  addScripts() {
-    const scripts = {
-      scripts: {
-        build: "webpack --config webpack.prod.js",
-        watch: "webpack --config webpack.dev.js --watch",
-      },
-    };
-    this.fs.extendJSON(this.destinationPath("package.json"), scripts);
+  _addScripts() {
+    return this.fs.extendJSON(
+      this.destinationPath("package.json"),
+      this.fs.readJSON(this.templatePath("package.json"))
+    );
   }
 
-  createIndexFile() {
+  _createIndexFile() {
     this.fs.copyTpl(
       this.templatePath("src/index.ts"),
       this.destinationPath("src/index.ts")
     );
+  }
+  writing() {
+    this._addESLintConfig();
+    this._addTsConfig();
+    this._addWebpackConfig();
+    this._createIndexFile();
+    return this._addScripts();
+  }
+  _installBabel() {
+    this.npmInstall(["@babel/core", "@babel/preset-typescript"], {
+      "save-dev": true,
+    });
+  }
+  _installWebpack() {
+    this.npmInstall(
+      ["webpack", "webpack-cli", "babel-loader", "webpack-merge"],
+      {
+        "save-dev": true,
+      }
+    );
+  }
+  _installTypescript() {
+    this.npmInstall(["typescript"], { "save-dev": true });
+  }
+
+  _installEslint() {
+    this.npmInstall(
+      [
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser",
+        "eslint",
+        "eslint-config-prettier",
+        "eslint-plugin-prettier",
+        "prettier",
+      ],
+      { "save-dev": true }
+    );
+  }
+
+  install() {
+    this._installBabel();
+    this._installTypescript();
+    this._installEslint();
+    this._installWebpack();
   }
 };

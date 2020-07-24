@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "watch": "webpack --config webpack.dev.js --watch"
+  }
+}

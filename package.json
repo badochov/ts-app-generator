@@ -20,6 +20,7 @@
   "author": "badochov",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "lodash": "^4.17.19",
     "yeoman-generator": "^4.11.0"
   },
   "repository": "https://github.com/badochov/ts-app-generator"
